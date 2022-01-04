@@ -1,6 +1,12 @@
 const { exec } = require("child_process");
 
-const queueNames = process.argv[2].split(",");
+let queueNames;
+let arg = process.argv[2]
+if (!arg) {
+  queueNames = require("./properties.json");
+} else {
+  queueNames = arg.split(",");
+}
 queueNames.forEach((queue) => {
   exec(
     `awslocal sqs create-queue --queue-name ${queue} ${
